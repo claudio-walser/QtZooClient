@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MenuBar</class>
+ <widget class="QMenuBar" name="MenuBar">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>455</width>
+    <height>27</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <widget class="QMenu" name="menuBlubb_hier_ist_die_Menubar">
+   <property name="title">
+    <string>Connections</string>
+   </property>
+   <addaction name="actionMenu_One"/>
+  </widget>
+  <action name="actionMenu_One">
+   <property name="text">
+    <string>New zookeeper Server</string>
+   </property>
+  </action>
+  <addaction name="menuBlubb_hier_ist_die_Menubar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

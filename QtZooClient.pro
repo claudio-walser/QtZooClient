@@ -14,10 +14,16 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         qtzooclient.cpp \
-    settingsdialog.cpp
+    settingsdialog.cpp \
+    menubar.cpp \
+    form.cpp
 
 HEADERS  += qtzooclient.h \
-    settingsdialog.h
+    settingsdialog.h \
+    menubar.h \
+    form.h
 
 FORMS    += qtzooclient.ui \
-    settingsdialog.ui
+    settingsdialog.ui \
+    menubar.ui \
+    form.ui
