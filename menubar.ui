@@ -16,18 +16,16 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
-  <widget class="QMenu" name="menuBlubb_hier_ist_die_Menubar">
-   <property name="title">
-    <string>Connections</string>
-   </property>
-   <addaction name="actionMenu_One"/>
-  </widget>
   <action name="actionMenu_One">
    <property name="text">
     <string>New zookeeper Server</string>
    </property>
   </action>
-  <addaction name="menuBlubb_hier_ist_die_Menubar"/>
+  <action name="actionAddServer">
+   <property name="text">
+    <string>Add Server</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

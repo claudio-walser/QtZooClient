@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "menubar.h"
+#include "zootabs.h"
 
 namespace Ui {
 class QtZooClient;
@@ -16,9 +17,12 @@ public:
     explicit QtZooClient(QWidget *parent = 0);
     ~QtZooClient();
     void initUi();
+    void initSignals();
+    void openZooDialog();
 private:
     Ui::QtZooClient *ui;
-    MenuBar* menuBar;
+    MenuBar *menuBar;
+    ZooTabs *zooServerContainer;
 };
 
 #endif // QTZOOCLIENT_H

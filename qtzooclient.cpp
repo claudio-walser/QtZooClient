@@ -1,7 +1,8 @@
 #include "qtzooclient.h"
 #include "ui_qtzooclient.h"
-#include "settingsdialog.h"
+#include "zoodialog.h"
 #include "menubar.h"
+#include "zootabs.h"
 
 QtZooClient::QtZooClient(QWidget *parent) :
     QMainWindow(parent),
@@ -9,12 +10,10 @@ QtZooClient::QtZooClient(QWidget *parent) :
 {
     ui->setupUi(this);
     this->initUi();
+    this->initSignals();
 
-
-    // tryout settings dialog
-    /*SettingsDialog settingsDialog;
-    settingsDialog.show();
-    settingsDialog.exec();*/
+    // crashes with sigsegv - probably cause the tabview isnt rendered yet
+    //this->addServer(tr("10.20.0.40"));
 }
 
 QtZooClient::~QtZooClient()
@@ -24,6 +23,23 @@ QtZooClient::~QtZooClient()
 
 void QtZooClient::initUi()
 {
-    MenuBar* menuBar = new MenuBar(this);
+    menuBar = new MenuBar(this);
+
     this->setMenuBar(menuBar);
+
+    zooServerContainer = new ZooTabs(this->centralWidget());
+    menuBar->setTabView(zooServerContainer);
+    statusBar()->showMessage(tr("ui is ready"));
+}
+
+void QtZooClient::initSignals()
+{
+
+}
+
+void QtZooClient::openZooDialog()
+{
+    ZooDialog zooDialog;
+    zooDialog.show();
+    zooDialog.exec();
 }
