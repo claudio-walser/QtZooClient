@@ -1,5 +1,6 @@
 #include "zootabs.h"
 #include "ui_zootabs.h"
+#include "zootelnetwidget.h"
 
 ZooTabs::ZooTabs(QWidget *parent) :
     QTabWidget(parent),
@@ -13,8 +14,9 @@ ZooTabs::~ZooTabs()
     delete ui;
 }
 
-void ZooTabs::addServer(QString serverIp)
+int ZooTabs::addServer(QString serverIp)
 {
-
-    this->addTab(new QTabWidget(this), serverIp);
+    ZooTelnetWidget *tab = new ZooTelnetWidget(this);
+    tab->setServer(&serverIp);
+    return this->addTab(tab, serverIp);
 }

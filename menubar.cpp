@@ -38,8 +38,7 @@ void MenuBar::openZooDialog()
 
     // if dialog accepted
     if (zooDialog.exec() == 1) {
-
-        tabView->addServer(zooDialog.getServerAdress());
+        tabView->setCurrentIndex(tabView->addServer(zooDialog.getServerAdress()));
         //QObject child = parentWidget()->findChild("ZooTabs");
         qCritical(zooDialog.getServerAdress().toUtf8());
     }

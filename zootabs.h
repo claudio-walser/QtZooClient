@@ -14,7 +14,7 @@ class ZooTabs : public QTabWidget
 public:
     explicit ZooTabs(QWidget *parent = 0);
     ~ZooTabs();
-    void addServer(QString serverIp);
+    int addServer(QString serverIp);
 
 private:
     Ui::ZooTabs *ui;

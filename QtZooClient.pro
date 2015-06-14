@@ -16,14 +16,17 @@ SOURCES += main.cpp\
         qtzooclient.cpp \
     menubar.cpp \
     zootabs.cpp \
-    zoodialog.cpp
+    zoodialog.cpp \
+    zootelnetwidget.cpp
 
 HEADERS  += qtzooclient.h \
     menubar.h \
     zootabs.h \
-    zoodialog.h
+    zoodialog.h \
+    zootelnetwidget.h
 
 FORMS    += qtzooclient.ui \
     menubar.ui \
     zootabs.ui \
-    zoodialog.ui
+    zoodialog.ui \
+    zootelnetwidget.ui
