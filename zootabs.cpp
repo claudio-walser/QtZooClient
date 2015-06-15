@@ -17,6 +17,6 @@ ZooTabs::~ZooTabs()
 int ZooTabs::addServer(QString serverIp)
 {
     ZooTelnetWidget *tab = new ZooTelnetWidget(this);
-    tab->setServer(&serverIp);
+    tab->setServer(serverIp);
     return this->addTab(tab, serverIp);
 }
