@@ -1,27 +1,42 @@
 #include "zootelnetwidget.h"
 #include "ui_zootelnetwidget.h"
+#include <QTcpSocket>
+#include <QPushButton>
+#include <QSignalMapper>
 
 ZooTelnetWidget::ZooTelnetWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ZooTelnetWidget)
 {
     ui->setupUi(this);
+    socket = new QTcpSocket(this);
     setupTelnetCommands();
 }
 
 ZooTelnetWidget::~ZooTelnetWidget()
 {
+    socket->close();
+    delete socket;
     delete ui;
 }
 
-void ZooTelnetWidget::setServer(QString &serverIp)
+void ZooTelnetWidget::setServer(QString serverIp, QString serverPort)
 {
-    server = &serverIp;
+    server = serverIp;
+    port = serverPort;
 }
 
 void ZooTelnetWidget::connect()
 {
-    //open a socket
+    QObject::connect(socket, SIGNAL(connected()),this, SLOT(connected()));
+    QObject::connect(socket, SIGNAL(disconnected()),this, SLOT(disconnected()));
+    QObject::connect(socket, SIGNAL(bytesWritten(qint64)),this, SLOT(bytesWritten(qint64)));
+    QObject::connect(socket, SIGNAL(readyRead()),this, SLOT(readyRead()));
+
+    socket->connectToHost(server, port.toInt());
+    if(!socket->waitForConnected(5000)) {
+        qCritical() << "ZooTelnetWidget::connect : " << socket->errorString() << " before-server-" << server << "-after server";
+    }
 }
 
 void ZooTelnetWidget::setupTelnetCommands()
@@ -39,9 +54,56 @@ void ZooTelnetWidget::setupTelnetCommands()
     commandList.insert("wchc", "New in 3.3.0: Lists detailed information on watches for the server, by session. This outputs a list of sessions(connections) with associated watches (paths). Note, depending on the number of watches this operation may be expensive (ie impact server performance), use it carefully.");
     commandList.insert("wchp", "New in 3.3.0: Lists detailed information on watches for the server, by path. This outputs a list of paths (znodes) with associated sessions. Note, depending on the number of watches this operation may be expensive (ie impact server performance), use it carefully.");
 
-
+    int count = 0;
     foreach(QString i, commandList.keys()) {
-        qCritical(commandList.value(i).toUtf8());
-    }
+        QPushButton *btn = new QPushButton();
+        btn->setText(i);
+        btn->setToolTip(commandList.value(i));
 
+        // dammit i go most probably to extend QPushButton today evening and create my own signal to pass the current command
+        QObject::connect(btn, SIGNAL(clicked()),this, SLOT(socketWrite()));
+
+        /*
+        // Map Signal to pass additional params
+        QSignalMapper mapper;
+        QObject::connect(btn, SIGNAL(released()), &mapper, SLOT(map()));
+        mapper.setMapping(btn, i); // Number to be passed in the slot
+        QObject::connect(&mapper, SIGNAL(mapped(QString)), this, SLOT(socketWrite()));*/
+
+        ui->buttonLayout->addWidget(btn, 1, count);
+        ++count;
+    }
+}
+
+/*
+ * slots
+ */
+void ZooTelnetWidget::socketWrite(QString string)
+{
+    socket->write(string.toUtf8());
+}
+
+void ZooTelnetWidget::socketWrite()
+{
+    qCritical() << "damn you QPushButton - get the clicked button anyhow?? " << this;
+}
+
+void ZooTelnetWidget::connected()
+{
+    qCritical() << "ZooTelnetWidget::connected : " << "connected...";
+}
+
+void ZooTelnetWidget::disconnected()
+{
+    qCritical() << "ZooTelnetWidget::disconnected : " << "disconnected...";
+}
+
+void ZooTelnetWidget::bytesWritten(qint64 bytes)
+{
+    qCritical() << "ZooTelnetWidget::bytesWritten : " << bytes << " bytes written...";
+}
+
+void ZooTelnetWidget::readyRead()
+{
+    ui->output->append(socket->readAll());
 }

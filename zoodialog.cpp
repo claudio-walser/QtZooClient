@@ -17,5 +17,10 @@ ZooDialog::~ZooDialog()
 
 QString ZooDialog::getServerAdress()
 {
-    return ui->lineEdit->text();
+    return ui->lineEditAddress->text();
+}
+
+QString ZooDialog::getServerPort()
+{
+    return ui->lineEditPort->text();
 }

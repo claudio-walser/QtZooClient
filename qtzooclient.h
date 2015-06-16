@@ -17,8 +17,6 @@ public:
     explicit QtZooClient(QWidget *parent = 0);
     ~QtZooClient();
     void initUi();
-    void initSignals();
-    void openZooDialog();
 private:
     Ui::QtZooClient *ui;
     MenuBar *menuBar;

@@ -16,6 +16,9 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: red;</string>
+  </property>
   <action name="actionMenu_One">
    <property name="text">
     <string>New zookeeper Server</string>

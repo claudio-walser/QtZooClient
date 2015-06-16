@@ -15,6 +15,7 @@ public:
     explicit ZooDialog(QWidget *parent = 0);
     ~ZooDialog();
     QString getServerAdress();
+    QString getServerPort();
 
 private:
     Ui::ZooDialog *ui;

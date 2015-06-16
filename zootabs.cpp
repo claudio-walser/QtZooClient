@@ -14,9 +14,14 @@ ZooTabs::~ZooTabs()
     delete ui;
 }
 
-int ZooTabs::addServer(QString serverIp)
+int ZooTabs::addServer(QString serverIp, QString port)
 {
     ZooTelnetWidget *tab = new ZooTelnetWidget(this);
-    tab->setServer(serverIp);
-    return this->addTab(tab, serverIp);
+    tab->setServer(serverIp, port);
+    // tryout stat command
+    tab->connect();
+    tab->socketWrite("stat");
+
+    // add tab to TabView and return the new TabIndex
+    return this->addTab(tab, serverIp + ":" + port);
 }
