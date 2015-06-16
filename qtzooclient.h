@@ -2,7 +2,6 @@
 #define QTZOOCLIENT_H
 
 #include <QMainWindow>
-#include "zootabs.h"
 
 namespace Ui {
 class QtZooClient;
@@ -20,7 +19,6 @@ private slots:
     void openZooDialog();
 private:
     Ui::QtZooClient *ui;
-    ZooTabs *zooServerContainer;
 };
 
 #endif // QTZOOCLIENT_H

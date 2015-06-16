@@ -8,11 +8,6 @@ ZooCommandButton::ZooCommandButton(QPushButton *parent) :
     QObject::connect(this, SIGNAL(clicked()),this, SLOT(emitCommandClicked()));
 }
 
-ZooCommandButton::~ZooCommandButton()
-{
-
-}
-
 void ZooCommandButton::emitCommandClicked()
 {
     emit commandClicked(this->text());

@@ -62,15 +62,7 @@ void ZooTelnetWidget::setupTelnetCommands()
         btn->setText(i);
         btn->setToolTip(commandList.value(i));
 
-        // dammit i go most probably to extend QPushButton today evening and create my own signal to pass the current command
         QObject::connect(btn, SIGNAL(commandClicked(QString)),this, SLOT(socketWrite(QString)));
-
-        /*
-        // Map Signal to pass additional params
-        QSignalMapper mapper;
-        QObject::connect(btn, SIGNAL(released()), &mapper, SLOT(map()));
-        mapper.setMapping(btn, i); // Number to be passed in the slot
-        QObject::connect(&mapper, SIGNAL(mapped(QString)), this, SLOT(socketWrite()));*/
 
         ui->buttonLayout->addWidget(btn, 1, count);
         ++count;

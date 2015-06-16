@@ -18,8 +18,6 @@ QtZooClient::~QtZooClient()
 
 void QtZooClient::initUi()
 {
-    zooServerContainer = new ZooTabs(this->centralWidget());
-
     QAction *newZooAction = new QAction(tr("&New"), ui->menuBar);
     connect(newZooAction, SIGNAL(triggered()), this, SLOT(openZooDialog()));
     ui->menuBar->addAction(newZooAction);
@@ -34,9 +32,7 @@ void QtZooClient::openZooDialog()
 
     // if dialog accepted
     if (zooDialog.exec() == 1) {
-        zooServerContainer->setCurrentIndex(zooServerContainer->addServer(zooDialog.getServerAdress(), zooDialog.getServerPort()));
+        ui->centralWidget->setCurrentIndex(ui->centralWidget->addServer(zooDialog.getServerAdress(), zooDialog.getServerPort()));
         qCritical("Menubar::openZooDialog : " + zooDialog.getServerAdress().toUtf8());
-    } else {
-        qCritical("wtf");
     }
 }
