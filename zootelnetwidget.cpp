@@ -10,7 +10,13 @@ ZooTelnetWidget::ZooTelnetWidget(QWidget *parent) :
     ui(new Ui::ZooTelnetWidget)
 {
     ui->setupUi(this);
+
     socket = new QTcpSocket(this);
+    QObject::connect(socket, SIGNAL(connected()),this, SLOT(connected()));
+    QObject::connect(socket, SIGNAL(disconnected()),this, SLOT(disconnected()));
+    QObject::connect(socket, SIGNAL(bytesWritten(qint64)),this, SLOT(bytesWritten(qint64)));
+    QObject::connect(socket, SIGNAL(readyRead()),this, SLOT(readyRead()));
+
     setupTelnetCommands();
 }
 
@@ -29,11 +35,6 @@ void ZooTelnetWidget::setServer(QString serverIp, QString serverPort)
 
 void ZooTelnetWidget::connect()
 {
-    QObject::connect(socket, SIGNAL(connected()),this, SLOT(connected()));
-    QObject::connect(socket, SIGNAL(disconnected()),this, SLOT(disconnected()));
-    QObject::connect(socket, SIGNAL(bytesWritten(qint64)),this, SLOT(bytesWritten(qint64)));
-    QObject::connect(socket, SIGNAL(readyRead()),this, SLOT(readyRead()));
-
     socket->connectToHost(server, port.toInt());
     if(!socket->waitForConnected(5000)) {
         qCritical() << "ZooTelnetWidget::connect : " << socket->errorString() << " before-server-" << server << "-after server";
@@ -62,7 +63,7 @@ void ZooTelnetWidget::setupTelnetCommands()
         btn->setToolTip(commandList.value(i));
 
         // dammit i go most probably to extend QPushButton today evening and create my own signal to pass the current command
-        QObject::connect(btn, SIGNAL(clicked()),this, SLOT(socketWrite()));
+        QObject::connect(btn, SIGNAL(commandClicked(QString)),this, SLOT(socketWrite(QString)));
 
         /*
         // Map Signal to pass additional params
@@ -81,12 +82,10 @@ void ZooTelnetWidget::setupTelnetCommands()
  */
 void ZooTelnetWidget::socketWrite(QString string)
 {
+    qCritical() << "ZooTelnetWidget::socketWrite : " << string;
+    // since zookeeper closes the connection after any command, we can connect right here
+    connect();
     socket->write(string.toUtf8());
-}
-
-void ZooTelnetWidget::socketWrite()
-{
-    qCritical() << "damn you QPushButton - get the clicked button anyhow?? " << this;
 }
 
 void ZooTelnetWidget::connected()
@@ -106,5 +105,7 @@ void ZooTelnetWidget::bytesWritten(qint64 bytes)
 
 void ZooTelnetWidget::readyRead()
 {
+    qCritical() << "ZooTelnetWidget::readyRead";
     ui->output->append(socket->readAll());
+    ui->output->append("\n----------------------------------\n");
 }

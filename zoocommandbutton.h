@@ -10,6 +10,15 @@ class ZooCommandButton : public QPushButton
 public:
     explicit ZooCommandButton(QPushButton *parent = 0);
     ~ZooCommandButton();
+
+
+
+signals:
+   void commandClicked(QString command);
+
+private slots:
+   void emitCommandClicked();
+
 };
 
 #endif // ZOOCOMMANDBUTTON_H

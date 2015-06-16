@@ -26,7 +26,6 @@ public slots:
     void bytesWritten(qint64 bytes);
     void readyRead();
     void socketWrite(QString string);
-    void socketWrite();
 
 private:
     Ui::ZooTelnetWidget *ui;
