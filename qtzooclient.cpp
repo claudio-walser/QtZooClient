@@ -1,7 +1,7 @@
 #include "qtzooclient.h"
 #include "ui_qtzooclient.h"
-#include "menubar.h"
 #include "zootabs.h"
+#include "zoodialog.h"
 
 QtZooClient::QtZooClient(QWidget *parent) :
     QMainWindow(parent),
@@ -18,10 +18,25 @@ QtZooClient::~QtZooClient()
 
 void QtZooClient::initUi()
 {
-    menuBar = new MenuBar(this);
-
-    this->setMenuBar(menuBar);
     zooServerContainer = new ZooTabs(this->centralWidget());
-    menuBar->setTabView(zooServerContainer);
+
+    QAction *newZooAction = new QAction(tr("&New"), ui->menuBar);
+    connect(newZooAction, SIGNAL(triggered()), this, SLOT(openZooDialog()));
+    ui->menuBar->addAction(newZooAction);
+
     statusBar()->showMessage(tr("ui is ready"));
+}
+
+void QtZooClient::openZooDialog()
+{
+    ZooDialog zooDialog;
+    zooDialog.show();
+
+    // if dialog accepted
+    if (zooDialog.exec() == 1) {
+        zooServerContainer->setCurrentIndex(zooServerContainer->addServer(zooDialog.getServerAdress(), zooDialog.getServerPort()));
+        qCritical("Menubar::openZooDialog : " + zooDialog.getServerAdress().toUtf8());
+    } else {
+        qCritical("wtf");
+    }
 }

@@ -2,7 +2,6 @@
 #define QTZOOCLIENT_H
 
 #include <QMainWindow>
-#include "menubar.h"
 #include "zootabs.h"
 
 namespace Ui {
@@ -17,9 +16,10 @@ public:
     explicit QtZooClient(QWidget *parent = 0);
     ~QtZooClient();
     void initUi();
+private slots:
+    void openZooDialog();
 private:
     Ui::QtZooClient *ui;
-    MenuBar *menuBar;
     ZooTabs *zooServerContainer;
 };
 
