@@ -1,5 +1,6 @@
 #include "zootelnetwidget.h"
 #include "ui_zootelnetwidget.h"
+#include "zoocommandbutton.h"
 #include <QTcpSocket>
 #include <QPushButton>
 #include <QSignalMapper>
@@ -56,7 +57,7 @@ void ZooTelnetWidget::setupTelnetCommands()
 
     int count = 0;
     foreach(QString i, commandList.keys()) {
-        QPushButton *btn = new QPushButton();
+        ZooCommandButton *btn = new ZooCommandButton();
         btn->setText(i);
         btn->setToolTip(commandList.value(i));
 

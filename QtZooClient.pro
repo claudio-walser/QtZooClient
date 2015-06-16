@@ -18,13 +18,15 @@ SOURCES += main.cpp\
     menubar.cpp \
     zootabs.cpp \
     zoodialog.cpp \
-    zootelnetwidget.cpp
+    zootelnetwidget.cpp \
+    zoocommandbutton.cpp
 
 HEADERS  += qtzooclient.h \
     menubar.h \
     zootabs.h \
     zoodialog.h \
-    zootelnetwidget.h
+    zootelnetwidget.h \
+    zoocommandbutton.h
 
 FORMS    += qtzooclient.ui \
     menubar.ui \

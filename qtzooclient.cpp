@@ -21,7 +21,6 @@ void QtZooClient::initUi()
     menuBar = new MenuBar(this);
 
     this->setMenuBar(menuBar);
-
     zooServerContainer = new ZooTabs(this->centralWidget());
     menuBar->setTabView(zooServerContainer);
     statusBar()->showMessage(tr("ui is ready"));
