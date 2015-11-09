@@ -19,7 +19,9 @@ QtZooClient::~QtZooClient()
 void QtZooClient::initUi()
 {
     QAction *newZooAction = new QAction(tr("&New"), ui->menuBar);
+
     connect(newZooAction, SIGNAL(triggered()), this, SLOT(openZooDialog()));
+    ui->menuBar->setNativeMenuBar(false);
     ui->menuBar->addAction(newZooAction);
 
     statusBar()->showMessage(tr("ui is ready"));
